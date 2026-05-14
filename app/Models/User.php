@@ -14,10 +14,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
-        'reference_id',
-        'reference_type',
-        'softDeletes',
     ];
 
     protected $hidden = [
@@ -25,40 +21,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
-    // Role helper methods
-    public function isAdmin(): bool
+    protected function casts(): array
     {
-        return $this->role === 'admin';
-    }
-
-    public function isDoctor(): bool
-    {
-        return $this->role === 'doctor';
-    }
-
-    public function isCustomer(): bool
-    {
-        return $this->role === 'customer';
-    }
-
-    // Relationships
-    public function doctor()
-    {
-        return $this->hasOne(Doctor::class, 'user_id');
-    }
-
-    public function customer()
-    {
-        return $this->hasOne(Customer::class, 'user_id');
-    }
-
-    public function pets()
-    {
-        return $this->hasMany(Pet::class, 'user_id');
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }
